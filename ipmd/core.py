@@ -201,7 +201,7 @@ class RIPIAR(RIPIA):
 
 
 if __name__== "__main__":
-      infos={"_Time_" : time.strftime("%m/%d/%Y"),
+      info={"_Time_" : time.strftime("|%m/%d/%Y|"),
 			            "_Name_" : "Tuscott|"}
       image= "image.png"
       saveName = "image_ipmd.png"
