@@ -6,8 +6,8 @@ t="\t"
 class RIPIA:
 	def __init__(self, imgFile,infos=None):
 		if infos is None:
-			infos={"_Time_" : time.strftime("%m/%d/%Y"),
-			            "_Name_" : "Unkown"}
+			infos={"_Time_" : time.strftime("|%m/%d/%Y|"),
+			            "_Name_" : "Unkown|"}
 		if not isinstance(infos, dict):
 			raise TypeError("unexpected info.")
 		if not imgFile.lower().endswith("png"):
@@ -17,10 +17,6 @@ class RIPIA:
 		self.imgFile=imgFile
 		
 	def IMAGE(self,imgFile):
-		""":
-			- Return image 2D pixel (row,col) -
-			- Return image width and height -
-		"""
 		try:
 			_image_ = _IMG_.open(imgFile)
 			_imgFlatPixel_ = list(_image_.getdata())
@@ -30,10 +26,6 @@ class RIPIA:
 		except Exception as e: return (e)
 			
 	def InfoToAscii(self):
-		""":
-			- Convert user info to ascii code -
-			- Return dict with _Time_:info, _Name_:info -
-		"""
 		infos = self.userInfo
 		asciiInfo= {}
 		for key, info in infos.items():
@@ -46,20 +38,13 @@ class RIPIA:
 		return asciiInfo
 		
 	def TotalInfoPixel(self):
-		""":
-			- Return total lenght of user info -
-		"""
 		infos = self.userInfo
 		totalLen =0
 		for key, info in infos.items():
 			totalLen+= len(info)
 		return totalLen
 	
-	def AsciiJoinedChunk(self):
-		""":
-			- Return list of 3 chunks of the user info -
-			- [ [..., ..., ...], ...] All ascii info code inside it -
-		"""	
+	def AsciiJoinedChunk(self):	
 		asciiInfo= self.InfoToAscii()
 		asciiChunk=[]
 		for key, info in asciiInfo.items():
@@ -69,11 +54,6 @@ class RIPIA:
 		return asciiAllChunk
 			
 	def AsciiToPixel(self, listChunk3Pixel):
-		""":
-			- Take list[[(..., ..., ...)], ...] of image pixel color -
-			- And convert it to info pixel -
-			- And return info pixel -
-		"""
 		if not isinstance(listChunk3Pixel, list): return "pixel container must be list[]"
 		infoLength= self.TotalInfoPixel()
 		pixelLength, givenLength = math.ceil(infoLength/3),len(listChunk3Pixel[0])
@@ -169,14 +149,62 @@ class RIPIA:
 		
 		_imgInfo.save(saveName)
 		return f"{saveName} save successful"
-class RIPIAR:
-    def _init_(self, imgFile):
-        ...		
+
+
+class RIPIAR(RIPIA):
+	def __init__(self, imgFile):
+		if not imgFile.lower().endswith("png"):
+			raise ValueError("RIPIAR currently only supports PNG files to ensure data retrieve.")
+			
+		self.rImgFile = imgFile
+		
+	def reveal(self):
+		_rImg2D, _imgWidth, _imgHeight= self.IMAGE(self.rImgFile)
+		_staticLenght= 15
+		_25Percent = math.ceil(((_imgHeight)/2)/2)
+		_widthCenter = math.ceil((_imgWidth/2)-(_staticLenght/2)) if _imgWidth//2>= _staticLenght else 0
+		_25Percent_, _widthCenter_,_rImg2D_=_25Percent, _widthCenter,_rImg2D
+		_3Map_ = 3
+		_directPInfo_=[]
+		while _3Map_>0:
+			_currentPRow = _rImg2D_[_25Percent_]
+			_currenExInfo_=_currentPRow[_widthCenter_:_widthCenter_+_staticLenght]
+			_directPInfo_.append(_currenExInfo_)
+			_25Percent_+=_25Percent
+			_3Map_-=1
+		_directPCharPip_= [chr(char) for bundle in _directPInfo_ for pixel in bundle for char in pixel]
+		_3MapInfo_=[]
+		for bundle in _directPInfo_:
+			currentBundle1D=[char for pixel in bundle for char in pixel]
+			currentBundle1DStr=str(currentBundle1D)
+			currentBundle1DStr=currentBundle1DStr[currentBundle1DStr.find("124"):currentBundle1DStr.rfind("124")+3]
+			currentBundle1DIntList= [int(char) for char in currentBundle1DStr.split(',')]
+			_each3MapInfo_={}
+			for chars in currentBundle1DIntList:
+				if "_Info_" in _each3MapInfo_:
+					if len(str(chars)) ==3 and chars != 124:
+						_2len = int(str(chars)[-2:])
+						_each3MapInfo_["_Info_"].append(chr(_2len))
+					else:
+						_each3MapInfo_["_Info_"].append(chr(chars))
+				else:
+					if len(str(chars)) ==3 and chars != 124:
+						_2len = int(str(chars)[-2:])
+						_each3MapInfo_["_Info_"]=[chr(_2len)]
+					else:
+						_each3MapInfo_["_Info_"]=[chr(chars)]
+			_3MapInfo_.append(["".join(map(str,[tLchr.lower() for tLchr in _each3MapInfo_["_Info_"]]))])
+			_each3MapInfo_={}
 				
-if __name__=="__main__":
-    info={"_Time_" : '|04/15/2026|', 
-      "_Name_" : "tuscottt|"
-      }
-      image= "image_for_testing.png"
+		return _3MapInfo_
+
+
+
+if __name__== "__main__":
+      infos={"_Time_" : time.strftime("%m/%d/%Y"),
+			            "_Name_" : "Tuscott|"}
+      image= "image.png"
+      saveName = "image_ipmd.png"
       test=RIPIA(image, info)
-      print(t,test.save("image_for_testingInfo.png"))
+      print(t, test.save(saveName))
+      
