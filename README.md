@@ -4,7 +4,7 @@ Redundant Image Pixel Information Anchor
 
 ## The Problem:
 
-When you send a photo through WhatsApp, or move it from an Android to another Devices, the "born date" (the day you actually took the photo) usually disappears. Even if you take a screenshot, the original info is gone forever because the phone makes a brand new file.
+When you send a photo through WhatsApp, or move it from your Device to another Devices, the "born date" (the day you actually took the photo) usually disappears. Even if you take a screenshot, the original info is gone forever because the phone makes a brand new file.
 
 ## The Solution:
 
