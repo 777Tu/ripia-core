@@ -18,9 +18,18 @@ I built IPMD to fix this. Instead of putting the info in a hidden "backpack" (me
 **It survives cropping:** The code pins the same info in 3 different spots (25%, 50%, and 75% height). Even if you crop half the photo, the info stays.
 
 
-## Quick Install:
+## Installation:
+
+### From GitHub:
 ```bash
 pip install git+https://github.com/777Tu/ipmd-core.git
+```
+
+### From local source:
+```bash
+git clone https://github.com/777Tu/ipmd-core.git
+cd ipmd-core
+pip install --force-reinstall .
 ```
 
 ## Quick Start:
