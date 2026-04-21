@@ -138,10 +138,16 @@ class RIPIA:
 		
 	def _img2DT1D(self):
 		_img2DPixel=self.Q3C_PixelITImg()
-		_img2DPixel = [pixel for bundle in _img2DPixel for pixel in bundle]
-		return _img2DPixel
+		_img1DPixel = [pixel for bundle in _img2DPixel for pixel in bundle]
+		return _img1DPixel
 		
-	def save(self, saveName="RIPIA.png"):
+	def save(self, saveName=None):
+		if saveName is None:
+			imgFile = self.imgFile
+			exten = imgFile[imgFile.rfind("."):]
+			saveName = imgFile[0:imgFile.find(".")] +"_ipmd" + exten
+		
+			
 		_imgFlat = self._img2DT1D()
 		_img= _IMG_.open(self.imgFile)
 		_imgInfo = _IMG_.new(_img.mode, (_img.size))
@@ -149,6 +155,9 @@ class RIPIA:
 		
 		_imgInfo.save(saveName)
 		return f"{saveName} save successful"
+
+
+
 
 
 class RIPIAR(RIPIA):
@@ -199,12 +208,11 @@ class RIPIAR(RIPIA):
 		return _3MapInfo_
 
 
-
+ 
 if __name__== "__main__":
       info={"_Time_" : time.strftime("|%m/%d/%Y|"),
 			            "_Name_" : "Tuscott|"}
-      image= "image.png"
-      saveName = "image_ipmd.png"
+      image= "image_for_testing.png"
+      saveName = "image_for_testing.png"
       test=RIPIA(image, info)
-      print(t, test.save(saveName))
-      
+      print(t, test.save())
