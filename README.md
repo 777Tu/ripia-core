@@ -46,3 +46,13 @@ image.save("photo_archived.png")
 extractor = RIPIAR("photo_archived.png")
 print(extractor.reveal())
 ```
+## Roadmap 🧪
+### Foundation (Done):
+**✅ Hide Information:** Successfully inject data into image pixels.
+**✅ Triple Anchors:** Save info in 3 different spots for redundancy.
+**✅ Recover Data:** Extract the original info back with 100% accuracy.
+
+### In Progress :
+**⛔ Crop Protection:** Make the tool find data even if the image is cut or cropped.
+**⛔ Screenshot Sync:** Improve retrieval for images with extra size added.
+**⛔ File Support:** Optimize logic to work better across many image formats.
