@@ -1,4 +1,4 @@
-import time,math
+import time,math, argparse as _ARGP_
 from PIL import Image as _IMG_
 
 t="\t"
@@ -146,8 +146,9 @@ class RIPIA:
 			imgFile = self.imgFile
 			exten = imgFile[imgFile.rfind("."):]
 			saveName = imgFile[0:imgFile.find(".")] +"_ipmd" + exten
-		
-			
+		imgFile = self.imgFile
+		exten = imgFile[imgFile.rfind("."):]
+		saveName = imgFile[0:imgFile.find(".")] +"_ipmd" + exten	
 		_imgFlat = self._img2DT1D()
 		_img= _IMG_.open(self.imgFile)
 		_imgInfo = _IMG_.new(_img.mode, (_img.size))
@@ -207,12 +208,24 @@ class RIPIAR(RIPIA):
 				
 		return _3MapInfo_
 
+def ArgParser():
+    parse = _ARGP_.ArgumentParser(description="IPMD(Image Pixel MetaData)\nipmd i used to add info in image pixel.")
+    parse.add_argument("-ach", "--anchor", help="Anchor(a) is used to add info in image pixel.", action="store_true")
+    parse.add_argument("-src","--source", help="Source(s) represent your source file.")
+    parse.add_argument("-sv","--save", help="Save(s) save as")
 
+    arg = parse.parse_args()
+    if arg.anchor:
+        return arg.source, arg.save
+    else:
+        return "None"
  
 if __name__== "__main__":
+      print(ArgParser())
+
+
       info={"_Time_" : time.strftime("|%m/%d/%Y|"),
 			            "_Name_" : "Tuscott|"}
-      image= "image_for_testing.png"
-      saveName = "image_for_testing.png"
-      test=RIPIA(image, info)
-      print(t, test.save())
+      src, svNm = ArgParser()
+      test=RIPIA(src, info)
+      print(t, test.save(svNm))
