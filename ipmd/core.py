@@ -221,7 +221,9 @@ def ArgParser():
     parse.add_argument("-r","--retrieve", help="--Retrieve(r) is used to retieve info from image.", action="store_true")
     parse.add_argument("-rsrc","--retrievesource", help="RetrieveSource(rsrc) is source of image to retrieve info from.")
 
-    arg = parse.parse_args()
+    #arg = parse.parse_args()
+    return parse.parse_args()
+    
     if arg.anchor:
         return "anchor", arg.source,arg.information,arg.save
     elif arg.retrieve:
@@ -229,12 +231,26 @@ def ArgParser():
     else:
         return "Type [filename] --help, for more infomation."
 if __name__== "__main__":
+      """
       if ArgParser()[0]=="anchor":
           print("Anchor\n", ArgParser())
       elif ArgParser()[0]=="retrieve":
           print("Retrieve\n", ArgParser())
       else:
           print(ArgParser())
+"""
+      args = ArgParser()
+      if args.anchor:
+          info=args.information
+          src = args.source
+          svNm = None if args.save is True else args.save
+          ImgObject=RIPIA(src, info)
+          print(ImgObject.save(svNm))
+      elif args.retrieve:
+          src = args.retrievesource
+          ImgObject=RIPIAR(src)
+          print(ImgObject.reveal())
+          
 
 """
       info={"_Time_" : time.strftime("|%m/%d/%Y|"),
