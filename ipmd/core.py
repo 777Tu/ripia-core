@@ -1,6 +1,7 @@
 import time,math, argparse as _ARGP_
 from ast import literal_eval
 from PIL import Image as _IMG_
+from pathlib import Path
 
 t="\t"
 
@@ -15,8 +16,9 @@ class RIPIA:
 
 		if ("_Time_" not in infos or "_Name_" not in infos) or (not infos["_Time_"].startswith("|") or not infos["_Time_"].endswith("|") or not infos["_Name_"].endswith("|")):
 		    raise ValueError("Error: Incorrect information format. \nExpected: \n\t\"{'_Time_': '|M/D/Y|', '_Name_': 'object-name|'}\". \nMake sure you put the pipe '|' in the right spots so your data can be retrieved correctly.")
-
-		if not imgFile.lower().endswith("png"):
+		if len(infos["_Time_"])> 15 or len(infos["_Time_"])<8 or len(infos["_Name_"]) <5 or len(infos["_Name_"]) > 30:
+		    raise TypeError("Unexpected Date or Name. Lenght Date must be between 15&8. Lenght Name must be between 30&5.")
+		if Path(imgFile).suffix not in [".png"]:
 				raise ValueError("\nRIPIA currently only supports PNG files to ensure data integrity.")
 		
 		self.userInfo=infos
@@ -148,25 +150,25 @@ class RIPIA:
 		return _img1DPixel
 		
 	def save(self, saveName=None):
-		if saveName is None:
-			imgFile = self.imgFile
-			exten = imgFile[imgFile.rfind("."):]
-			saveName = imgFile[0:imgFile.find(".")] +"_ipmd" + exten
-		imgFile = self.imgFile
-		exten = imgFile[imgFile.rfind("."):]
-		saveName = imgFile[0:imgFile.find(".")] +"_ipmd" + exten	
-		_imgFlat = self._img2DT1D()
-		_img= _IMG_.open(self.imgFile)
-		_imgInfo = _IMG_.new(_img.mode, (_img.size))
-		_imgInfo.putdata(_imgFlat)
-		
-		_imgInfo.save(saveName)
-		return f"{saveName} save successful"
+	    if saveName is not None and Path(saveName).suffix not in [".png"]:
+	        raise ValueError("\nRIPIA currently only supports PNG files to ensure data integrity.")
+	    if saveName is None:
+	        imgFile = self.imgFile
+	        exten = imgFile[imgFile.rfind("."):]
+	        saveName = imgFile[0:imgFile.find(".")] +"_ipmd" + exten
+	    else:
+	        imgFile = saveName
+	        exten = imgFile[imgFile.rfind("."):]
+	        saveName = imgFile[0:imgFile.find(".")] +"_ipmd" + exten
+	    _imgFlat = self._img2DT1D()
+	    _img= _IMG_.open(self.imgFile)
+	    _imgInfo = _IMG_.new(_img.mode, (_img.size))
+	    _imgInfo.putdata(_imgFlat)
+	    _imgInfo.save(saveName)
+	    return f"{saveName} save successful"
 
 
-
-
-
+	    
 class RIPIAR(RIPIA):
 	def __init__(self, imgFile):
 		if not imgFile.lower().endswith("png"):
@@ -234,9 +236,6 @@ if __name__ == "__main__":
             print("Error: You need to provide --source and --info to anchor data.")
         else:
             info = args.information
-            #if "_Time_" and "_Name_" not in info:
-                #print("Error: information not recognized.Exepected \"{'_Time_': '|M/D/Y|', '_Name_': 'object-name|'}\".Don't forget use the pip '|' at the right place otherwise your info's would not retrieve well.")
-               # exit()
             src = args.source
             svNm = None if args.save is True else args.save
             ImgObject = RIPIA(src, info)
