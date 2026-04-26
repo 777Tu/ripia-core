@@ -10,9 +10,14 @@ class RIPIA:
 			infos={"_Time_" : time.strftime("|%m/%d/%Y|"),
 			            "_Name_" : "Unkown|"}
 		if not isinstance(infos, dict):
-			raise TypeError("unexpected info.")
+			raise TypeError("\nInvalid data type. 'info' must be a dictionary.")
+
+
+		if ("_Time_" and "_Name_" not in infos) or not infos["_Time_"].startswith("|") or not infos["_Time_"].endswith("|") or not infos["_Name_"].endswith("|"):
+		    raise ValueError("Error: Incorrect information format. \nExpected: \n\t\"{'_Time_': '|M/D/Y|', '_Name_': 'object-name|'}\". \nMake sure you put the pipe '|' in the right spots so your data can be retrieved correctly.")
+
 		if not imgFile.lower().endswith("png"):
-				raise ValueError("RIPIA currently only supports PNG files to ensure data integrity.")
+				raise ValueError("\nRIPIA currently only supports PNG files to ensure data integrity.")
 		
 		self.userInfo=infos
 		self.imgFile=imgFile
@@ -229,6 +234,9 @@ if __name__ == "__main__":
             print("Error: You need to provide --source and --info to anchor data.")
         else:
             info = args.information
+            #if "_Time_" and "_Name_" not in info:
+                #print("Error: information not recognized.Exepected \"{'_Time_': '|M/D/Y|', '_Name_': 'object-name|'}\".Don't forget use the pip '|' at the right place otherwise your info's would not retrieve well.")
+               # exit()
             src = args.source
             svNm = None if args.save is True else args.save
             ImgObject = RIPIA(src, info)
