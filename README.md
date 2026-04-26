@@ -1,4 +1,4 @@
-# IPMD-core 📌
+update readme# IPMD-core 📌
 
 Image Pixel MetaData
 
@@ -49,7 +49,8 @@ print(extractor.reveal())
 ## Command Line Usage (CLI):
 You can now use IPMD directly from your terminal without writing any extra Python scripts.
 ### Anchoring data (Hiding info):
-To pin information into an image, use the --anchor (or -ach) command. You must provide the source image and a dictionary containing **\_Time\_** and **\_Name\_**.\  
+To pin information into an image, use the --anchor (or -ach) command. You must provide the source image and a dictionary containing **\_Time\_** and **\_Name\_**.  
+### Example:  
 `
 python main.py --anchor --source "your_image.png" --information "{'_Time_': '|04/26/2026|', '_Name_': 'Tuscott|'}"
 `  
