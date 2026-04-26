@@ -13,7 +13,7 @@ class RIPIA:
 			raise TypeError("\nInvalid data type. 'info' must be a dictionary.")
 
 
-		if ("_Time_" and "_Name_" not in infos) or not infos["_Time_"].startswith("|") or not infos["_Time_"].endswith("|") or not infos["_Name_"].endswith("|"):
+		if ("_Time_" not in infos or "_Name_" not in infos) or (not infos["_Time_"].startswith("|") or not infos["_Time_"].endswith("|") or not infos["_Name_"].endswith("|")):
 		    raise ValueError("Error: Incorrect information format. \nExpected: \n\t\"{'_Time_': '|M/D/Y|', '_Name_': 'object-name|'}\". \nMake sure you put the pipe '|' in the right spots so your data can be retrieved correctly.")
 
 		if not imgFile.lower().endswith("png"):
