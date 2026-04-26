@@ -17,7 +17,7 @@ I built IPMD to fix this. Instead of putting the info in a hidden "backpack" (me
 
 **It survives cropping:** The code pins the same info in 3 different spots (25%, 50%, and 75% height). Even if you crop half the photo, the info stays.
 
-
+> 
 ## Installation:
 
 ### From GitHub:
@@ -47,7 +47,7 @@ extractor = RIPIAR("photo_archived.png")
 print(extractor.reveal())
 ```
 [Demo video on Youtube](https://youtu.be/LSUzlTra1_A?si=o1OJSCKH03yrN2Ge)
-
+> 
 ## Command Line Usage (CLI)
 You can now use IPMD directly from your terminal without writing any extra Python scripts.
 ### Anchoring data (Hiding info):
@@ -66,11 +66,12 @@ python main.py --anchor --source "your_image.png" --information "{'_Time_': '|04
 > - **_Name_:** Between 5 and 30 characters long.
 > - **_Time_:** Between 8 and 15 characters long.  
  
-> ### Retrieving Data (Extracting Info):  
+### Retrieving Data (Extracting Info):  
 To extract the hidden metadata from an IPMD-encoded image, use the `--retrieve` (or `-r`) command.  
 `python main.py --retrieve --retrievesource "your_image_ipmd.png"
 `  
 ​`--retrievesource` / `-rsrc`: The image you want to extract info from.  
+> 
 ## Roadmap 
 ### Foundation (Done):
 
@@ -82,3 +83,4 @@ To extract the hidden metadata from an IPMD-encoded image, use the `--retrieve` 
 - [ ] **Screenshot Sync:** Improve retrieval for images with extra size added.  
 - [ ] **File Support:** Optimize logic to work better across many image formats.  
 
+> 
