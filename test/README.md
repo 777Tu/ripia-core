@@ -1,5 +1,6 @@
 # IPMD Test Demo  
 ## Original Image(Without info):  
+> File Name: original.png
 ![Original](original.png)
 ## Anchoring Data(Adding info):  
 ```python
@@ -15,6 +16,7 @@ print(anchor.save()) #Auto save with original name + ipmd
 #### Output:  
 Save successful: [original_ipmd.png]
 ### IPMD(Original image with info):
+> File Name: original_ipmd.png
 > Zoom to spot the info at 25%,50%,75% y,x
 ![Original_ipmd](original_ipmd.png)  
 ## Extracting Data(Retrieving info):  
