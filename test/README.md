@@ -29,10 +29,13 @@ extrat = RIPIAR(ipmd_image)
 print(extrat.reveal())
 ```  
 #### Output  
-[['|27/4/2026|minimalist human|'], ['|27/4/2026|minimalist human|'], ['|27/4/2026|minimalist human|']]      
++ [['|27/4/2026|minimalist human|'],  
++ ['|27/4/2026|minimalist human|'],  
++ ['|27/4/2026|minimalist human|']]      
 
 ## CLI Demo  
 ## Original Image(Without info):
+> File Name: cli_original.png
 ![cli_original](cli_original.png)
 ### `--anchor`|`-ach` (Adding info):
 ```bash
@@ -45,12 +48,15 @@ Save successful: [original_ipmd.png]
 > File Name: cli_original_ipmd.png  
 > Zoom to spot the info at 25%,50%,75% y,x  
 ![cli_original](cli_original_ipmd.png)  
-## `--retrivesource`|`-r` (Extrating info):  
+### `--retrivesource`|`-r` (Extrating info):  
 ```bash
 python ../ipmd/core.py -r -rsrc cli_original_ipmd.png
 ```  
 #### Output:  
-[['|27/4/2026|cosmic fusion object|'], ['|27/4/2026|cosmic fusion object|'], ['|27/4/2026|cosmic fusion object|']]
+ 
++ [['|27/4/2026|cosmic fusion object|'],  
++ ['|27/4/2026|cosmic fusion object|'],  
++ ['|27/4/2026|cosmic fusion object|']]
 
 
 
