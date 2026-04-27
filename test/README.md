@@ -47,10 +47,10 @@ Save successful: [original_ipmd.png]
 ![cli_original](cli_original_ipmd.png)  
 ## `--retrivesource`|`-r` (Extrating info):  
 ```bash
-python ../ipmd/core.py -r -src cli_original_ipmd.png
+python ../ipmd/core.py -r -rsrc cli_original_ipmd.png
 ```  
-#### Output:
-
+#### Output:  
+[['|27/4/2026|cosmic fusion object|'], ['|27/4/2026|cosmic fusion object|'], ['|27/4/2026|cosmic fusion object|']]
 
 
 
